@@ -1,0 +1,111 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+//Buzdalova S BSB0-07-19 
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        { 
+            MyQueue.Allqueue();
+            General.start();
+            Console.ReadLine();
+        }
+
+    }       
+
+}
+ class General 
+    {
+        public static bool inGeneral = true;
+        public static void start()
+        {
+            new Thread(() =>
+            {
+                for (; ; )
+                    if (Console.ReadKey(true).Key == ConsoleKey.Q)
+                    {
+                        inGeneral = false;
+                        Console.WriteLine("proggramm will after death of all consumers");
+                    }
+            }) {IsBackground = true}.Start();
+
+            Producers p1 = new Producers();
+            Producers p2 = new Producers();
+            Producers p3 = new Producers();
+            Consumers c1 = new Consumers();
+            Consumers c2 = new Consumers();
+
+            Thread tp1 = new Thread(p1.produce);
+            Thread tp2 = new Thread(p1.produce);
+            Thread tp3 = new Thread(p1.produce);
+            Thread tc1 = new Thread(c1.consume);
+            Thread tc2 = new Thread(c2.consume);
+
+            tp1.Start();
+            tp2.Start();
+            tp3.Start();
+            tc1.Start();
+            tc2.Start();
+        }
+    }
+ public static class MyQueue
+    {
+        public static Queue<int> queue = new Queue<int>(200);
+        public  static int size;
+        public static void Allqueue() 
+        {
+            for (int i = 0; i<size; i++)
+            { queue.Enqueue(i); }
+        }
+
+    }
+     class Producers      
+    {
+        static Random random;
+        public void produce()
+        {
+            random = new Random();
+            while (General.inGeneral) 
+            {
+                if (MyQueue.queue.Count <= 80)
+                {
+                    Console.WriteLine("queue is less then 80, produsers start");
+                    lock (MyQueue.queue)
+                    {
+                        while (MyQueue.queue.Count <= MyQueue.size) 
+                        {
+                            int n = random.Next(120);
+                            MyQueue.queue.Enqueue(n);
+                            Console.WriteLine("add "+ n);
+                            Thread.Sleep(100);
+                        }
+                        Console.WriteLine("queue is ENOUGH");
+                    }
+                }
+                Thread.Sleep(200);
+            }
+          
+        }
+
+    }
+    public class Consumers 
+    { public void consume() 
+        {
+            while (true) 
+            {
+                lock (MyQueue.queue)
+                { if (MyQueue.queue.Count > 0) { Console.WriteLine("Consumering "+MyQueue.queue.Dequeue()); }
+                  else
+                    {
+                        Console.WriteLine("Queue is empty & S T O P ");
+                        break;
+                    }
+                }
+                Thread.Sleep(300);
+            }
+
+        }
+
+    }
