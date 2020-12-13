@@ -33,6 +33,7 @@ public class Main {
 
 
         //part 2
+       
         //task 1
        /*ArrayList<Window> windows= new ArrayList<>();
        windows.add(new Window(1, Window.ServiceCategory.ALL));
@@ -71,43 +72,16 @@ public class Main {
             max=in.nextInt();
             maxLength=max;
 
-            //ArrayList<Patient> path=new ArrayList<>();
-        /*for (int i = 0; i<maxLength; i++){
-            path.add(i,new Patient( rand.nextInt((100) + 10),  false, false));
-        }*/
-
- /*Thread ttyu = new Thread(new Runnable() {
-    public void run(){
-        try{ for (int i = 1; i<maxLength+1; i++){
-            sleep(500);
-            MyQueue.addPatientToQueue();
-            if(!queue.isEmpty()){
-                System.out.println(i+ " " + queue.element());
-            }
-            else System.out.println( "queue is empty ");}
-        }
-        catch (InterruptedException e) { e.printStackTrace(); }
-    }
-
-});
-        ttyu.run();*/
-
         Process process= new Process();
         for (int i = 0; i<maxLength; i++){
-            queue.addLast(new Patient( rand.nextInt((10000) + 10),  false, false));
-           // MyQueue.queue.Allqueue();
-           //MyQueue.addPatientToQueue();
-            System.out.println(" Size of queue "+queue.size());
-           // System.out.println(i+ " " + queue.element());
-           // Process.mrtt.start();
-            //Process.doctor.start();
-        }
+            queue.addLast(new Patient( rand.nextInt((10000) + 10),  false, false));   
+            System.out.println(" Size of queue "+queue.size());        
+            }
         while(queue.peek()!=null){process.run();
             System.out.println(queue.element() + " obslyjen");
             queue.removeFirst();
             System.out.println(" Size of queue "+queue.size());
-        }
-       // for (Patient pathh: queue) { }
+            }   
 
     }
 
