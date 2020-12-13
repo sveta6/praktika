@@ -8,56 +8,8 @@ public class Process extends Thread {
 
     private int time;
 
-//    public enum ServiceCategory{
-//        DOCTOR, MRT;
-//    }
-//    public ServiceCategory patientstep;
-//
-//    public Process (ServiceCategory patientstep){
-//        this.patientstep= patientstep;
-//    }
-
-
     public volatile  Patient service;
-   // private Object p;
-    /*public static Thread mrtt=new Thread(()->{
-        for (int i =0; i<MyQueue.queue.size()&&!Thread.interrupted(); )
-        {   try{System.out.println("patient "+Patient.ID +" in  MRT's room");
-            //therapist(this);
-           // Thread.sleep(1000);
-            Patient.hasservicedMRT=true;
-            Thread.yield();
-            //MyQueue.queue.poll();
-            i++;
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        }
-    });
-
-    //static volatile String patient;
-    public  static Thread doctor=new Thread(()->{
-         for (int i =0; i<MyQueue.queue.size()&&!Thread.interrupted(); )
-         {   try{System.out.println("patient "+Patient.ID +" in  therapist's class");
-             //therapist(this);
-             //Thread.sleep(300);
-             Patient.hasservicedT=true;
-             if (Patient.hasservicedT&&Patient.hasservicedMRT==true) System.out.println(Patient.ID+" good serv");
-             else System.out.println(Patient.ID+" bad serv");
-             MyQueue.queue.remove();
-
-         }
-             catch (Exception e) {
-             e.printStackTrace();
-         }
-
-         }
-
-    });
-*/
+ 
 
     public void therapist(Patient patient){
          Thread doctor=new Thread(()->{
@@ -85,8 +37,6 @@ public class Process extends Thread {
     }});
         doctor.start();
     }
-
-
 
     public  void mrt( Patient patient){
         Thread mrtt=new Thread(()->{
